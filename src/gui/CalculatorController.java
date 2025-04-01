@@ -147,5 +147,27 @@ public class CalculatorController implements Initializable {
 			}
 		});
 
+		// detecta pressionamento das teclas
+		txtEntryAndExit.setOnKeyPressed(event -> {
+			switch (event.getCode()) {
+			case DIGIT0, NUMPAD0 -> handleNumberInput("0");
+			case DIGIT1, NUMPAD1 -> handleNumberInput("1");
+			case DIGIT2, NUMPAD2 -> handleNumberInput("2");
+			case DIGIT3, NUMPAD3 -> handleNumberInput("3");
+			case DIGIT4, NUMPAD4 -> handleNumberInput("4");
+			case DIGIT5, NUMPAD5 -> handleNumberInput("5");
+			case DIGIT6, NUMPAD6 -> handleNumberInput("6");
+			case DIGIT7, NUMPAD7 -> handleNumberInput("7");
+			case DIGIT8, NUMPAD8 -> handleNumberInput("8");
+			case DIGIT9, NUMPAD9 -> handleNumberInput("9");
+			case ADD -> handleOperatorInput("+");
+			case SUBTRACT -> handleOperatorInput("-");
+			case MULTIPLY -> handleOperatorInput("*");
+			case DIVIDE -> handleOperatorInput("/");
+			case ENTER, EQUALS -> handleEquals();
+			case BACK_SPACE, DELETE -> handleClear();
+			}
+		});
+
 	}
 }
