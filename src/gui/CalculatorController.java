@@ -62,18 +62,77 @@ public class CalculatorController implements Initializable {
 	@FXML
 	private Button btSum;
 
+	private Double num1 = 0.0;
+
+	private String operator = "";
+
+	private void handleNumberInput(String buttonText) {
+		if (txtEntryAndExit.getText().equals("0")) { // verificar se a entrada e 0
+			txtEntryAndExit.setText(buttonText); // se sim, coloca o número pressionado
+		} else {
+			txtEntryAndExit.appendText(buttonText); // se não, continua recebendo números sem sobrescrever o anterior
+		}
+	}
+
+	private void handleOperatorInput(String operator) {
+
+		// Lógica para armazenar o primeiro número e o operador
+		num1 = Double.parseDouble(txtEntryAndExit.getText());
+		this.operator = operator;
+		txtEntryAndExit.setText("0"); // Reseta o txtEntryAndExit para o próximo número
+	}
+
+	// igualdade
+	@FXML
+	private void handleEquals() {
+		double num2 = Double.parseDouble(txtEntryAndExit.getText());
+		double result = 0;
+
+		switch (operator) {
+		case "+":
+			result = num1 + num2;
+			break;
+		case "-":
+			result = num1 - num2;
+			break;
+		case "*":
+			result = num1 * num2;
+			break;
+		case "/":
+			if (num2 != 0) {
+				result = num1 / num2;
+			} else {
+				txtEntryAndExit.setText("Erro");
+				return;
+			}
+			break;
+		}
+
+		txtEntryAndExit.setText(String.valueOf(result)); // converte de double p/String para apresentar na tela
+		num1 = result;
+	}
+
+	// limpar tela
+	@FXML
+	private void handleClear() {
+		txtEntryAndExit.setText("0");
+		num1 = 0.0;
+		operator = "";
+	}
+
 	@FXML
 	public void handleButtonAction(ActionEvent event) {
-		// verifica qual botão foi pressionado
 		Button sourceButton = (Button) event.getSource();
 		String buttonText = sourceButton.getText();
 
-		// Se o valor atual for 0, ele substitui pelo valor do bt pressionado
-		if (txtEntryAndExit.getText().equals("0")) {
-			txtEntryAndExit.setText(buttonText);
-		} else {
-			// Se não, coloca futuros valores a direita
-			txtEntryAndExit.appendText(buttonText);
+		if (buttonText.matches("[0-9]")) {
+			handleNumberInput(buttonText);
+		} else if (buttonText.matches("[+\\-*/]")) {
+			handleOperatorInput(buttonText);
+		} else if (buttonText.equals("=")) {
+			handleEquals();
+		} else if (buttonText.equals("C")) {
+			handleClear();
 		}
 	}
 
@@ -87,6 +146,6 @@ public class CalculatorController implements Initializable {
 				txtEntryAndExit.setText("0");
 			}
 		});
-	}
 
+	}
 }
