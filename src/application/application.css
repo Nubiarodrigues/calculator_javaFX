@@ -1,1 +1,79 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+/* Definindo o fundo escuro para a cena */
+.root {
+    -fx-background-color: #333333; 
+}
+
+/* Estilo para o TextField: fundo claro e texto escuro */
+#txtEntryAndExit {
+    -fx-background-color: #f9f9f9; 
+    -fx-text-fill: #333333; 
+    -fx-font-size: 36.0px;
+    -fx-alignment: center-right;
+    -fx-padding: 10.0px;
+}
+
+/* Estilo geral dos botões: fundo claro e texto escuro */
+.button {
+    -fx-background-color: #e0e0e0; 
+    -fx-text-fill: #333333;
+    -fx-font-size: 24.0px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 80.0px;
+    -fx-pref-height: 80.0px;
+    -fx-border-radius: 10.0px;
+    -fx-effect: dropshadow(gaussian, rgba(0.0, 0.0, 0.0, 0.2), 10.0, 0.0, 2.0, 2.0);
+    -fx-padding: 10.0px;
+}
+
+/* Botões de operações (laranja) */
+#btSum, #btSubtraction, #btMultiplication, #btDivision {
+    -fx-background-color: #f39c12; 
+}
+
+/* Botão de limpar (C) em vermelho */
+#btClear {
+    -fx-background-color: #e74c3c; 
+    -fx-text-fill: white; 
+}
+
+/* Botão de igual (=) em azul */
+#btEqual {
+    -fx-background-color: #3498db; 
+    -fx-text-fill: white; 
+}
+
+/* Estilo para quando os botões são pressionados */
+.button:pressed {
+    -fx-background-color: #b0b0b0; 
+}
+
+#btClear:pressed {
+    -fx-background-color: #c0392b; 
+}
+
+#btEqual:pressed {
+    -fx-background-color: #2980b9; 
+}
+
+/* Estilo para o grid dos botões */
+.grid-pane {
+    -fx-hgap: 10.0;
+    -fx-vgap: 10.0;
+    -fx-padding: 20.0px;
+}
+
+/* Ajuste de dimensões do botão de igual */
+#btEqual {
+    -fx-background-color: #3498db;
+}
+
+/* Tamanho das linhas no layout */
+.grid-pane .row {
+    -fx-alignment: center;
+}
+
+/* Hover nos botões */
+.button:hover {
+    -fx-background-color: #d5d5d5; 
+    -fx-cursor: hand; 
+}

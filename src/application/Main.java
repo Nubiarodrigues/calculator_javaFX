@@ -13,8 +13,11 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CalculatorView.fxml"));
-			Parent parent = loader.load();
+			Parent parent = loader.load(); 
+
 			Scene mainScene = new Scene(parent);
+			mainScene.getStylesheets().add(getClass().getResource("/application/application.css").toExternalForm()); 																							
+
 			primaryStage.setScene(mainScene);
 			primaryStage.setTitle("Calculator");
 			primaryStage.show();
