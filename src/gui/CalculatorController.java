@@ -66,14 +66,27 @@ public class CalculatorController implements Initializable {
 	public void handleButtonAction(ActionEvent event) {
 		// verifica qual botão foi pressionado
 		Button sourceButton = (Button) event.getSource();
-		String ButtonText = sourceButton.getText();
+		String buttonText = sourceButton.getText();
 
-		System.out.println("Botão pressionado: " + ButtonText);
+		// Se o valor atual for 0, ele substitui pelo valor do bt pressionado
+		if (txtEntryAndExit.getText().equals("0")) {
+			txtEntryAndExit.setText(buttonText);
+		} else {
+			// Se não, coloca futuros valores a direita
+			txtEntryAndExit.appendText(buttonText);
+		}
 	}
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		txtEntryAndExit.setText("0");
+
+		// Listener (ouvinte) que detecta a mudança no TextField
+		txtEntryAndExit.textProperty().addListener((observable, oldValeu, newValue) -> {
+			if (newValue.isEmpty()) {
+				txtEntryAndExit.setText("0");
+			}
+		});
 	}
 
 }
