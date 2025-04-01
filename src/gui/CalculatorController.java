@@ -62,27 +62,42 @@ public class CalculatorController implements Initializable {
 	@FXML
 	private Button btSum;
 
+	@FXML
+	private Button btExponentiation;
+
+	@FXML
+	private Button btPercentage;
+
+	@FXML
+	private Button btComma;
+
+	@FXML
+	private Button btX;
+
 	private Double num1 = 0.0;
 
 	private String operator = "";
 
 	private void handleNumberInput(String buttonText) {
-		if (txtEntryAndExit.getText().equals("0")) { // verificar se a entrada e 0
-			txtEntryAndExit.setText(buttonText); // se sim, coloca o número pressionado
+		if (txtEntryAndExit.getText().equals("0")) { 
+			txtEntryAndExit.setText(buttonText); 
 		} else {
-			txtEntryAndExit.appendText(buttonText); // se não, continua recebendo números sem sobrescrever o anterior
+			txtEntryAndExit.appendText(buttonText); 
 		}
 	}
 
 	private void handleOperatorInput(String operator) {
-
-		// Lógica para armazenar o primeiro número e o operador
-		num1 = Double.parseDouble(txtEntryAndExit.getText());
-		this.operator = operator;
-		txtEntryAndExit.setText("0"); // Reseta o txtEntryAndExit para o próximo número
+	    String input = txtEntryAndExit.getText().replace(',', '.'); 
+	    try {
+	        num1 = Double.parseDouble(input);  
+	        this.operator = operator;  
+	        txtEntryAndExit.setText("0");  
+	    } catch (NumberFormatException e) {
+	        System.out.println("Erro de formatação de número: " + input);
+	    }
 	}
 
-	// igualdade
+
 	@FXML
 	private void handleEquals() {
 		double num2 = Double.parseDouble(txtEntryAndExit.getText());
@@ -98,6 +113,16 @@ public class CalculatorController implements Initializable {
 		case "*":
 			result = num1 * num2;
 			break;
+		case "**":
+			if (num1 != 0 && num2 != 0) {
+				result = Math.pow(num1, num2); 
+			} else {
+				txtEntryAndExit.setText("Erro");
+			}
+			break;
+		case "%":
+			 result = (num1 * num2) / 100.0;
+			break;
 		case "/":
 			if (num2 != 0) {
 				result = num1 / num2;
@@ -108,8 +133,25 @@ public class CalculatorController implements Initializable {
 			break;
 		}
 
-		txtEntryAndExit.setText(String.valueOf(result)); // converte de double p/String para apresentar na tela
+		txtEntryAndExit.setText(String.valueOf(result)); 
 		num1 = result;
+	}
+
+	@FXML
+	private void handleComma() {
+		String currentText = txtEntryAndExit.getText();
+		if (!currentText.contains(",")) { 
+			txtEntryAndExit.setText(currentText + ",");
+		}
+	}
+
+	@FXML
+	private void handleDeleteOne() {
+		String currentText = txtEntryAndExit.getText();
+		if (currentText.length() > 0) {
+			txtEntryAndExit.setText(currentText.substring(0, currentText.length() - 1));
+		}
+
 	}
 
 	// limpar tela
@@ -127,8 +169,12 @@ public class CalculatorController implements Initializable {
 
 		if (buttonText.matches("[0-9]")) {
 			handleNumberInput(buttonText);
-		} else if (buttonText.matches("[+\\-*/]")) {
+		} else if (buttonText.matches("[+\\-*/,]")) {
 			handleOperatorInput(buttonText);
+		} else if (buttonText.equals("**")) {
+			handleOperatorInput("**");
+		} else if (buttonText.equals("%")) {
+			handleOperatorInput("%");
 		} else if (buttonText.equals("=")) {
 			handleEquals();
 		} else if (buttonText.equals("C")) {
@@ -166,6 +212,7 @@ public class CalculatorController implements Initializable {
 			case DIVIDE -> handleOperatorInput("/");
 			case ENTER, EQUALS -> handleEquals();
 			case BACK_SPACE, DELETE -> handleClear();
+			case COMMA -> handleComma();
 			}
 		});
 
